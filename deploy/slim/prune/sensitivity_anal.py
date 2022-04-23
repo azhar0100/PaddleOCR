@@ -22,7 +22,7 @@ import sys
 __dir__ = os.path.dirname(__file__)
 sys.path.append(__dir__)
 sys.path.append(os.path.join(__dir__, '..', '..', '..'))
-sys.path.append(os.path.join(__dir__, '..', '..', '..', 'tools'))
+sys.path.append(os.path.join(__dir__, '..', '..', '..', 'tools_paddle'))
 
 import paddle
 import paddle.distributed as dist

@@ -14,7 +14,7 @@
 python3 -m paddle.distributed.launch \
     --log_dir=./log/ \
     --gpus "0,1,2,3,4,5,6,7" \
-    tools/train.py \
+    tools_paddle/train.py \
     -c configs/rec/rec_mv3_none_bilstm_ctc.yml
 ```
 
@@ -29,7 +29,7 @@ python3 -m paddle.distributed.launch \
     --log_dir=./log/ \
     --ips="${ip_list}" \
     --gpus="0,1,2,3,4,5,6,7" \
-    tools/train.py \
+    tools_paddle/train.py \
     -c configs/rec/rec_mv3_none_bilstm_ctc.yml
 ```
 

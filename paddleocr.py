@@ -26,13 +26,13 @@ import logging
 import numpy as np
 from pathlib import Path
 
-from tools.infer import predict_system
+from tools_paddle.infer import predict_system
 from ppocr.utils.logging import get_logger
 
 logger = get_logger()
 from ppocr.utils.utility import check_and_read_gif, get_image_file_list
 from ppocr.utils.network import maybe_download, download_with_progressbar, is_link, confirm_model_dir_url
-from tools.infer.utility import draw_ocr, str2bool, check_gpu
+from tools_paddle.infer.utility import draw_ocr, str2bool, check_gpu
 from ppstructure.utility import init_args, draw_structure_result
 from ppstructure.predict_system import OCRSystem, save_structure_res
 

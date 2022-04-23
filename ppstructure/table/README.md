@@ -64,10 +64,10 @@ The training data uses public data set [PubTabNet](https://arxiv.org/abs/1911.10
 
 ```shell
 # single GPU training
-python3 tools/train.py -c configs/table/table_mv3.yml
+python3 tools_paddle/train.py -c configs/table/table_mv3.yml
 # multi-GPU training
 # Set the GPU ID used by the '--gpus' parameter.
-python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools/train.py -c configs/table/table_mv3.yml
+python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools_paddle/train.py -c configs/table/table_mv3.yml
 ```
 
 In the above instruction, use `-c` to select the training to use the `configs/table/table_mv3.yml` configuration file.
@@ -78,7 +78,7 @@ For a detailed explanation of the configuration file, please refer to [config](.
 If you expect to load trained model and continue the training again, you can specify the parameter `Global.checkpoints` as the model path to be loaded.
 
 ```shell
-python3 tools/train.py -c configs/table/table_mv3.yml -o Global.checkpoints=./your/trained/model
+python3 tools_paddle/train.py -c configs/table/table_mv3.yml -o Global.checkpoints=./your/trained/model
 ```
 
 **Note**: The priority of `Global.checkpoints` is higher than that of `Global.pretrain_weights`, that is, when two parameters are specified at the same time, the model specified by `Global.checkpoints` will be loaded first. If the model path specified by `Global.checkpoints` is wrong, the one specified by `Global.pretrain_weights` will be loaded.

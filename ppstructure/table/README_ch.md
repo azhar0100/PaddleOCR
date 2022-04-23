@@ -88,9 +88,9 @@ note: 上述模型是在 PubLayNet 数据集上训练的表格识别模型，仅
 
 ```shell
 # 单机单卡训练
-python3 tools/train.py -c configs/table/table_mv3.yml
+python3 tools_paddle/train.py -c configs/table/table_mv3.yml
 # 单机多卡训练，通过 --gpus 参数设置使用的GPU ID
-python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools/train.py -c configs/table/table_mv3.yml
+python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools_paddle/train.py -c configs/table/table_mv3.yml
 ```
 
 上述指令中，通过-c 选择训练使用configs/table/table_mv3.yml配置文件。有关配置文件的详细解释，请参考[链接](../../doc/doc_ch/config.md)。
@@ -100,7 +100,7 @@ python3 -m paddle.distributed.launch --gpus '0,1,2,3' tools/train.py -c configs/
 如果训练程序中断，如果希望加载训练中断的模型从而恢复训练，可以通过指定Global.checkpoints指定要加载的模型路径：
 
 ```shell
-python3 tools/train.py -c configs/table/table_mv3.yml -o Global.checkpoints=./your/trained/model
+python3 tools_paddle/train.py -c configs/table/table_mv3.yml -o Global.checkpoints=./your/trained/model
 ```
 
 **注意**：`Global.checkpoints`的优先级高于 `Global.pretrain_weights`的优先级，即同时指定两个参数时，优先加载 `Global.checkpoints`指定的模型，如果 `Global.checkpoints`指定的模型路径有误，会加载 `Global.pretrain_weights`指定的模型。

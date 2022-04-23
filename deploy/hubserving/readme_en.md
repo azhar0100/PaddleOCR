@@ -143,7 +143,7 @@ hub serving start -c deploy/hubserving/ocr_system/config.json
 ## Send prediction requests
 After the service starts, you can use the following command to send a prediction request to obtain the prediction result:  
 ```shell
-python tools/test_hubserving.py server_url image_path
+python tools_paddle/test_hubserving.py server_url image_path
 ```  
 
 Two parameters need to be passed to the script:
@@ -158,7 +158,7 @@ For example, if the detection, recognition and 2-stage serial services are start
 
 **Eg.**
 ```shell
-python tools/test_hubserving.py http://127.0.0.1:8868/predict/ocr_system ./doc/imgs/
+python tools_paddle/test_hubserving.py http://127.0.0.1:8868/predict/ocr_system ./doc/imgs/
 ```
 
 ## Returned result format

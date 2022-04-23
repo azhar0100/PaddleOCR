@@ -123,14 +123,14 @@ PaddleDetection provides single-card/multi-card training mode to meet various tr
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0 #Don't need to run this command on Windows and Mac
-python tools/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml
+python tools_paddle/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml
 ```
 
 * GPU multi-card training
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0,1,2,3
-python -m paddle.distributed.launch --gpus 0,1,2,3 tools/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --eval
+python -m paddle.distributed.launch --gpus 0,1,2,3 tools_paddle/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --eval
 ```
 
 --eval: training while verifying
@@ -141,7 +141,7 @@ During the daily training, if training is interrupted due to some reasons, you c
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0,1,2,3
-python -m paddle.distributed.launch --gpus 0,1,2,3 tools/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --eval -r output/ppyolov2_r50vd_dcn_365e_coco/10000
+python -m paddle.distributed.launch --gpus 0,1,2,3 tools_paddle/train.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --eval -r output/ppyolov2_r50vd_dcn_365e_coco/10000
 ```
 
 Note: If you encounter "`Out of memory error`" , try reducing `batch_size` in the `ppyolov2_reader.yml`  file
@@ -154,7 +154,7 @@ Set parameters and use PaddleDetection to predict：
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0
-python tools/infer.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --infer_img=images/paper-image.jpg --output_dir=infer_output/ --draw_threshold=0.5 -o weights=output/ppyolov2_r50vd_dcn_365e_coco/model_final --use_vdl=Ture
+python tools_paddle/infer.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --infer_img=images/paper-image.jpg --output_dir=infer_output/ --draw_threshold=0.5 -o weights=output/ppyolov2_r50vd_dcn_365e_coco/model_final --use_vdl=Ture
 ```
 
 `--draw_threshold` is an optional parameter. According to the calculation of [NMS](https://ieeexplore.ieee.org/document/1699659), different threshold will produce different results, ` keep_top_k ` represent  the maximum amount of output target, the default value is 10. You can set different value according to your own actual situation。
@@ -176,7 +176,7 @@ The exported model name defaults to `model.*`, Layout Parser's code model is `in
 Execute the script to export model:
 
 ```bash
-python tools/export_model.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --output_dir=./inference -o weights=output/ppyolov2_r50vd_dcn_365e_coco/model_final.pdparams
+python tools_paddle/export_model.py -c configs/ppyolo/ppyolov2_r50vd_dcn_365e_coco.yml --output_dir=./inference -o weights=output/ppyolov2_r50vd_dcn_365e_coco/model_final.pdparams
 ```
 
 The prediction model is exported to `inference/ppyolov2_r50vd_dcn_365e_coco` ,including:`infer_cfg.yml`(prediction not required), `inference.pdiparams`, `inference.pdiparams.info`,`inference.pdmodel`

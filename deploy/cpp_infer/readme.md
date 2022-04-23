@@ -78,7 +78,7 @@ make install
 也可以直接修改`tools/build_opencv.sh`的内容，然后直接运行下面的命令进行编译。
 
 ```shell
-sh tools/build_opencv.sh
+sh tools_paddle/build_opencv.sh
 ```
 
 其中`root_path`为下载的opencv源码路径，`install_path`为opencv的安装路径，`make install`完成之后，会在该文件夹下生成opencv头文件和库文件，用于后面的OCR代码编译。
@@ -184,7 +184,7 @@ inference/
 * 编译命令如下，其中Paddle C++预测库、opencv等其他依赖库的地址需要换成自己机器上的实际地址。
 
 ```shell
-sh tools/build.sh
+sh tools_paddle/build.sh
 ```
 
 * 具体的，需要修改`tools/build.sh`中环境路径，相关内容如下：

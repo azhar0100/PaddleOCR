@@ -25,7 +25,7 @@ import numpy as np
 import time
 from PIL import Image
 from ppocr.utils.utility import get_image_file_list
-from tools.infer.utility import draw_ocr, draw_boxes
+from tools_paddle.infer.utility import draw_ocr, draw_boxes
 
 import requests
 import json

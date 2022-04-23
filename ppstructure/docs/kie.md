@@ -26,7 +26,7 @@ Download the pretrained model and predict the result:
 ```shell
 cd PaddleOCR/
 wget https://paddleocr.bj.bcebos.com/dygraph_v2.1/kie/kie_vgg16.tar && tar xf kie_vgg16.tar
-python3.7 tools/infer_kie.py -c configs/kie/kie_unet_sdmgr.yml -o Global.checkpoints=kie_vgg16/best_accuracy  Global.infer_img=../wildreceipt/1.txt
+python3.7 tools_paddle/infer_kie.py -c configs/kie/kie_unet_sdmgr.yml -o Global.checkpoints=kie_vgg16/best_accuracy  Global.infer_img=../wildreceipt/1.txt
 ```
 
 The prediction result is saved as `./output/sdmgr_kie/predicts_kie.txt`, and the visualization results are saved in the folder`/output/sdmgr_kie/kie_results/`.
@@ -49,7 +49,7 @@ ln -s ../../wildreceipt ./
 
 The configuration file used for training is `configs/kie/kie_unet_sdmgr.yml`. The default training data path in the configuration file is `train_data/wildreceipt`. After preparing the data, you can execute the model training with the following command:
 ```shell
-python3.7 tools/train.py -c configs/kie/kie_unet_sdmgr.yml -o Global.save_model_dir=./output/kie/
+python3.7 tools_paddle/train.py -c configs/kie/kie_unet_sdmgr.yml -o Global.save_model_dir=./output/kie/
 ```
 <a name="3-----"></a>
 
@@ -58,7 +58,7 @@ python3.7 tools/train.py -c configs/kie/kie_unet_sdmgr.yml -o Global.save_model_
 After training, you can execute the model evaluation with the following command:
 
 ```shell
-python3.7 tools/eval.py -c configs/kie/kie_unet_sdmgr.yml -o Global.checkpoints=./output/kie/best_accuracy
+python3.7 tools_paddle/eval.py -c configs/kie/kie_unet_sdmgr.yml -o Global.checkpoints=./output/kie/best_accuracy
 ```
 
 **Reference:**

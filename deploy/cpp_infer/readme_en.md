@@ -158,7 +158,7 @@ inference/
 * The compilation commands are as follows. The addresses of Paddle C++ inference library, opencv and other Dependencies need to be replaced with the actual addresses on your own machines.
 
 ```shell
-sh tools/build.sh
+sh tools_paddle/build.sh
 ```
 
 Specifically, you should modify the paths in `tools/build.sh`. The related content is as follows.

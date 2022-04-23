@@ -14,7 +14,7 @@
 
 from PIL import Image
 import numpy as np
-from tools.infer.utility import draw_ocr_box_txt, init_args as infer_args
+from tools_paddle.infer.utility import draw_ocr_box_txt, init_args as infer_args
 
 
 def init_args():
