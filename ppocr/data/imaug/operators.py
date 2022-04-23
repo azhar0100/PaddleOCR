@@ -23,14 +23,20 @@ import sys
 import six
 import cv2
 import numpy as np
+import math
 
 
 class DecodeImage(object):
     """ decode image """
 
-    def __init__(self, img_mode='RGB', channel_first=False, **kwargs):
+    def __init__(self,
+                 img_mode='RGB',
+                 channel_first=False,
+                 ignore_orientation=False,
+                 **kwargs):
         self.img_mode = img_mode
         self.channel_first = channel_first
+        self.ignore_orientation = ignore_orientation
 
     def __call__(self, data):
         img = data['image']
@@ -41,7 +47,11 @@ class DecodeImage(object):
             assert type(img) is bytes and len(
                 img) > 0, "invalid input 'img' in DecodeImage"
         img = np.frombuffer(img, dtype='uint8')
-        img = cv2.imdecode(img, 1)
+        if self.ignore_orientation:
+            img = cv2.imdecode(img, cv2.IMREAD_IGNORE_ORIENTATION |
+                               cv2.IMREAD_COLOR)
+        else:
+            img = cv2.imdecode(img, 1)
         if img is None:
             return None
         if self.img_mode == 'GRAY':
@@ -156,6 +166,44 @@ class KeepKeys(object):
         return data_list
 
 
+class Pad(object):
+    def __init__(self, size=None, size_div=32, **kwargs):
+        if size is not None and not isinstance(size, (int, list, tuple)):
+            raise TypeError("Type of target_size is invalid. Now is {}".format(
+                type(size)))
+        if isinstance(size, int):
+            size = [size, size]
+        self.size = size
+        self.size_div = size_div
+
+    def __call__(self, data):
+
+        img = data['image']
+        img_h, img_w = img.shape[0], img.shape[1]
+        if self.size:
+            resize_h2, resize_w2 = self.size
+            assert (
+                img_h < resize_h2 and img_w < resize_w2
+            ), '(h, w) of target size should be greater than (img_h, img_w)'
+        else:
+            resize_h2 = max(
+                int(math.ceil(img.shape[0] / self.size_div) * self.size_div),
+                self.size_div)
+            resize_w2 = max(
+                int(math.ceil(img.shape[1] / self.size_div) * self.size_div),
+                self.size_div)
+        img = cv2.copyMakeBorder(
+            img,
+            0,
+            resize_h2 - img_h,
+            0,
+            resize_w2 - img_w,
+            cv2.BORDER_CONSTANT,
+            value=0)
+        data['image'] = img
+        return data
+
+
 class Resize(object):
     def __init__(self, size=(640, 640), **kwargs):
         self.size = size
@@ -170,17 +218,19 @@ class Resize(object):
 
     def __call__(self, data):
         img = data['image']
-        text_polys = data['polys']
+        if 'polys' in data:
+            text_polys = data['polys']
 
         img_resize, [ratio_h, ratio_w] = self.resize_image(img)
-        new_boxes = []
-        for box in text_polys:
-            new_box = []
-            for cord in box:
-                new_box.append([cord[0] * ratio_w, cord[1] * ratio_h])
-            new_boxes.append(new_box)
+        if 'polys' in data:
+            new_boxes = []
+            for box in text_polys:
+                new_box = []
+                for cord in box:
+                    new_box.append([cord[0] * ratio_w, cord[1] * ratio_h])
+                new_boxes.append(new_box)
+            data['polys'] = np.array(new_boxes, dtype=np.float32)
         data['image'] = img_resize
-        data['polys'] = np.array(new_boxes, dtype=np.float32)
         return data
 
 
@@ -222,7 +272,7 @@ class DetResizeForTest(object):
         ori_h, ori_w = img.shape[:2]  # (h, w, c)
         ratio_h = float(resize_h) / ori_h
         ratio_w = float(resize_w) / ori_w
-        img = cv2.resize(img, (int(resize_w), int(resize_h)))
+        img = cv2.resize(img, (int(resize_w), int(resize_h)), interpolation=cv2.INTER_LANCZOS4)
         # return img, np.array([ori_h, ori_w])
         return img, [ratio_h, ratio_w]
 
@@ -267,7 +317,7 @@ class DetResizeForTest(object):
         try:
             if int(resize_w) <= 0 or int(resize_h) <= 0:
                 return None, (None, None)
-            img = cv2.resize(img, (int(resize_w), int(resize_h)))
+            img = cv2.resize(img, (int(resize_w), int(resize_h)),interpolation=cv2.INTER_LANCZOS4)
         except:
             print(img.shape, resize_w, resize_h)
             sys.exit(0)
@@ -292,7 +342,7 @@ class DetResizeForTest(object):
         max_stride = 128
         resize_h = (resize_h + max_stride - 1) // max_stride * max_stride
         resize_w = (resize_w + max_stride - 1) // max_stride * max_stride
-        img = cv2.resize(img, (int(resize_w), int(resize_h)))
+        img = cv2.resize(img, (int(resize_w), int(resize_h)),interpolation=cv2.INTER_LANCZOS4)
         ratio_h = resize_h / float(h)
         ratio_w = resize_w / float(w)
 
