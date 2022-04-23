@@ -165,7 +165,7 @@ class Resize(object):
         ori_h, ori_w = img.shape[:2]  # (h, w, c)
         ratio_h = float(resize_h) / ori_h
         ratio_w = float(resize_w) / ori_w
-        img = cv2.resize(img, (int(resize_w), int(resize_h)))
+        img = cv2.resize((img, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         return img, [ratio_h, ratio_w]
 
     def __call__(self, data):
@@ -222,7 +222,7 @@ class DetResizeForTest(object):
         ori_h, ori_w = img.shape[:2]  # (h, w, c)
         ratio_h = float(resize_h) / ori_h
         ratio_w = float(resize_w) / ori_w
-        img = cv2.resize(img, (int(resize_w), int(resize_h)))
+        img = cv2.resize((img, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         # return img, np.array([ori_h, ori_w])
         return img, [ratio_h, ratio_w]
 
@@ -267,7 +267,7 @@ class DetResizeForTest(object):
         try:
             if int(resize_w) <= 0 or int(resize_h) <= 0:
                 return None, (None, None)
-            img = cv2.resize(img, (int(resize_w), int(resize_h)))
+            img = cv2.resize((img, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         except:
             print(img.shape, resize_w, resize_h)
             sys.exit(0)
@@ -292,7 +292,7 @@ class DetResizeForTest(object):
         max_stride = 128
         resize_h = (resize_h + max_stride - 1) // max_stride * max_stride
         resize_w = (resize_w + max_stride - 1) // max_stride * max_stride
-        img = cv2.resize(img, (int(resize_w), int(resize_h)))
+        img = cv2.resize((img, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         ratio_h = resize_h / float(h)
         ratio_w = resize_w / float(w)
 
@@ -332,7 +332,7 @@ class E2EResizeForTest(object):
         max_stride = 128
         resize_h = (resize_h + max_stride - 1) // max_stride * max_stride
         resize_w = (resize_w + max_stride - 1) // max_stride * max_stride
-        im = cv2.resize(im, (int(resize_w), int(resize_h)))
+        im = cv2.resize((im, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         ratio_h = resize_h / float(h)
         ratio_w = resize_w / float(w)
         return im, (ratio_h, ratio_w)
@@ -361,7 +361,7 @@ class E2EResizeForTest(object):
         max_stride = 128
         resize_h = (resize_h + max_stride - 1) // max_stride * max_stride
         resize_w = (resize_w + max_stride - 1) // max_stride * max_stride
-        im = cv2.resize(im, (int(resize_w), int(resize_h)))
+        im = cv2.resize((im, (int(resize_w), int(resize_h))),interpolation=cv2.INTER_LANCZOS4)
         ratio_h = resize_h / float(h)
         ratio_w = resize_w / float(w)
 
@@ -401,7 +401,7 @@ class KieResize(object):
         max_stride = 32
         resize_h = (resize_h + max_stride - 1) // max_stride * max_stride
         resize_w = (resize_w + max_stride - 1) // max_stride * max_stride
-        im = cv2.resize(img, (resize_w, resize_h))
+        im = cv2.resize((img, (resize_w, resize_h)),interpolation=cv2.INTER_LANCZOS4)
         new_h, new_w = im.shape[:2]
         w_scale = new_w / w
         h_scale = new_h / h
