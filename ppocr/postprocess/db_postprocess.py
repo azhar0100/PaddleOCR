@@ -49,19 +49,26 @@ class DBPostProcess(object):
             "slow", "fast"
         ], "Score mode must be in [slow, fast] but got: {}".format(score_mode)
 
-        self.dilation_kernel = None if not use_dilation else np.array(
-            [[1, 1], [1, 1]])
+        # self.dilation_kernel = None if not use_dilation else np.array(
+        #     [[1, 1], [1, 1]])
+        self.dilation_kernel = None if not use_dilation else np.ones((5,5),dtype=np.uint8)
 
     def boxes_from_bitmap(self, pred, _bitmap, dest_width, dest_height):
         '''
         _bitmap: single map with shape (1, H, W),
                 whose values are binarized as {0, 1}
         '''
-
+        import uuid
+        bmpname = uuid.uuid4()
         bitmap = _bitmap
         height, width = bitmap.shape
-
-        outs = cv2.findContours((bitmap * 255).astype(np.uint8), cv2.RETR_LIST,
+        bitmap = (bitmap * 255).astype(np.uint8)
+        # bitmap = cv2.dilate(bitmap, np.ones((3,3),dtype=np.uint8))
+        # cv2.imwrite( f'/code/tmp/bmps/{bmpname}.png' , (bitmap * 255).astype(np.uint8))
+        # cv2.imwrite( f'/code/tmp/bmps/{bmpname}.png' , bitmap)
+        # outs = cv2.findContours((bitmap * 255).astype(np.uint8), cv2.RETR_LIST,
+        #                         cv2.CHAIN_APPROX_SIMPLE)
+        outs = cv2.findContours(bitmap, cv2.RETR_LIST,
                                 cv2.CHAIN_APPROX_SIMPLE)
         if len(outs) == 3:
             img, contours, _ = outs[0], outs[1], outs[2]
