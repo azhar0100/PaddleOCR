@@ -28,7 +28,7 @@ from ppocr.modeling.architectures import build_model
 from ppocr.postprocess import build_post_process
 from ppocr.utils.save_load import load_model
 from ppocr.utils.logging import get_logger
-from PaddleOCR.tools.program import load_config, merge_config, ArgsParser
+from tools_paddle.program import load_config, merge_config, ArgsParser
 
 
 def export_single_model(model, arch_config, save_path, logger):

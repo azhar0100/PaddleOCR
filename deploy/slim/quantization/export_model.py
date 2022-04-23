@@ -30,9 +30,9 @@ from ppocr.modeling.architectures import build_model
 from ppocr.postprocess import build_post_process
 from ppocr.utils.save_load import load_model
 from ppocr.utils.logging import get_logger
-from PaddleOCR.tools.program import load_config, merge_config, ArgsParser
+from tools_paddle.program import load_config, merge_config, ArgsParser
 from ppocr.metrics import build_metric
-import PaddleOCR.tools.program as program
+import tools_paddle.program as program
 from paddleslim.dygraph.quant import QAT
 from ppocr.data import build_dataloader
 
