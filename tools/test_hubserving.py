@@ -25,7 +25,7 @@ import numpy as np
 import time
 from PIL import Image
 from ppocr.utils.utility import get_image_file_list
-from PaddleOCR.tools.infer.utility import draw_ocr, draw_boxes
+from paddleocr.tools.infer.utility import draw_ocr, draw_boxes
 
 import requests
 import json

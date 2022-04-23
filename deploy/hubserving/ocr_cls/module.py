@@ -13,9 +13,9 @@ from paddlehub.module.module import moduleinfo, runnable, serving
 import cv2
 import paddlehub as hub
 
-from PaddleOCR.tools.infer.utility import base64_to_cv2
-from PaddleOCR.tools.infer.predict_cls import TextClassifier
-from PaddleOCR.tools.infer.utility import parse_args
+from paddleocr.tools.infer.utility import base64_to_cv2
+from paddleocr.tools.infer.predict_cls import TextClassifier
+from paddleocr.tools.infer.utility import parse_args
 from deploy.hubserving.ocr_cls.params import read_params
 
 

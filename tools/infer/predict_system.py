@@ -28,13 +28,13 @@ import time
 import logging
 from PIL import Image
 import json
-import PaddleOCR.tools.infer.utility as utility
-import PaddleOCR.tools.infer.predict_rec as predict_rec
-import PaddleOCR.tools.infer.predict_det as predict_det
-import PaddleOCR.tools.infer.predict_cls as predict_cls
+import paddleocr.tools.infer.utility as utility
+import paddleocr.tools.infer.predict_rec as predict_rec
+import paddleocr.tools.infer.predict_det as predict_det
+import paddleocr.tools.infer.predict_cls as predict_cls
 from ppocr.utils.utility import get_image_file_list, check_and_read_gif
 from ppocr.utils.logging import get_logger
-from PaddleOCR.tools.infer.utility import draw_ocr_box_txt, get_rotate_crop_image
+from paddleocr.tools.infer.utility import draw_ocr_box_txt, get_rotate_crop_image
 logger = get_logger()
 
 

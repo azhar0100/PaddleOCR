@@ -28,7 +28,7 @@ import logging
 
 from ppocr.utils.utility import get_image_file_list, check_and_read_gif
 from ppocr.utils.logging import get_logger
-from PaddleOCR.tools.infer.predict_system import TextSystem
+from paddleocr.tools.infer.predict_system import TextSystem
 from ppstructure.table.predict_table import TableSystem, to_excel
 from ppstructure.utility import parse_args, draw_structure_result
 
